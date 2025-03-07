@@ -10,19 +10,6 @@
         $controlador = cargarControlador($_GET['controlador']);
 
         if(isset($_GET['accion'])){
-
-            if(isset($_GET['id'])){
-                
-                
-                if(isset($_GET['idAmenaza'])){
-                    cargarAccion($controlador, $_GET['accion'], $_GET['id'], $_GET['idAmenaza'], $_GET['idSalvaguarda']);
-                }else{
-                    cargarAccion($controlador, $_GET['accion'], $_GET['id']);
-                }
-
-            }else {
-                cargarAccion($controlador, $_GET['accion']);
-            }
             
         }else{
             cargarAccion($controlador, ACCION_PRINCIPAL);

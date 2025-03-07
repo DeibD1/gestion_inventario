@@ -16,20 +16,14 @@ function cargarControlador($controlador)
     return $control;
 }
 
-function cargarAccion($controlador, $accion, $id=null, $idAmenaza=null, $idSalvaguarda=null)
+
+function cargarAccion($controlador, $accion, $id=null)
 {   
     
     if(isset($accion) && method_exists($controlador, $accion))
     {
         if($id == null){
             $controlador->$accion();
-        }else{
-            if($idAmenaza == null){
-                $controlador->$accion($id);
-            }else{
-                $controlador->$accion($id, $idAmenaza, $idSalvaguarda);
-            }
-            
         }
     } else {
         $controlador->ACCION_PRINCIPAL;
