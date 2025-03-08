@@ -18,4 +18,7 @@
         $controlador = cargarControlador(CONTROLADOR_PRINCIPAL);
         cargarAccion($controlador, ACCION_PRINCIPAL);
     }
+
+
+
 ?>
