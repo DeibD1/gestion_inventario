@@ -10,7 +10,12 @@
         $controlador = cargarControlador($_GET['controlador']);
 
         if(isset($_GET['accion'])){
-            
+
+            if(isset($_GET['idProveedor'])){
+                cargarAccion($controlador, $_GET['accion'], $_GET['idProveedor']);
+            }else{
+                cargarAccion($controlador, $_GET['accion']);
+            }
         }else{
             cargarAccion($controlador, ACCION_PRINCIPAL);
         }
