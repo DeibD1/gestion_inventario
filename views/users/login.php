@@ -1,6 +1,6 @@
-<?php require_once "views/shared/navbar.php"; ?>
 
-<link href="../../assets/login/login.css" rel="stylesheet">
+<link href="./assets/login/login.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="container">

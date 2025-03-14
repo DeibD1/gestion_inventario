@@ -11,9 +11,22 @@ class User {
 
     // Método para registrar un usuario
     public function register($name, $email, $password) {
-        $sql = "INSERT INTO users(full_name, email, password) 
-        VALUES ('$name','$email','$password')";
-        $this->db->query($sql);
+        // Verificar si el correo ya existe
+        $stmt = $this->db->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
+            return false; // El usuario ya existe
+        }
+    
+        // Insertar el nuevo usuario si no existe
+        $sql = "INSERT INTO users(full_name, email, password) VALUES (?, ?, ?)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("sss", $name, $email, $password);
+        
+        return $stmt->execute();
     }
 
     // Método para iniciar sesión
