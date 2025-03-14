@@ -1,4 +1,4 @@
-<?php require_once "views/shared/header.php"; ?>
+<?php require_once "views/shared/navbar.php"; ?>
 
 <div>
         <h1 class="text-center my-5"><?= $data["titulo"] ?></h1>
