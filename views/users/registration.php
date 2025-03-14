@@ -3,6 +3,7 @@
 </head>
 <body>
     <div class="container">
+        <h2>REGISTRO</h2>
         <form action="index.php?controlador=User&accion=verificarRegistro" method="post">
             <div class="form-group">
                 <input type="text" class="form-control" name="fullname" placeholder="Nombre: " required>

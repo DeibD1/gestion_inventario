@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 /* Estilos generales */
 body {
     font-family: 'Poppins', sans-serif;
@@ -7,17 +9,40 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
 /* Contenedor del formulario */
 .container {
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
     width: 400px;
     text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Título decorado */
+.container h2 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.container h2::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background: #007bff;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Estilos para los inputs */
@@ -31,6 +56,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
     color: white;
     outline: none;
+    transition: all 0.3s ease;
 }
 
 /* Placeholder estilizado */
@@ -38,7 +64,13 @@ body {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Botón de registro */
+/* Efecto de focus en los inputs */
+.form-group input:focus {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* Botón de login */
 .form-btn input {
     width: 100%;
     padding: 12px;
@@ -48,14 +80,28 @@ body {
     font-size: 18px;
     color: white;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
+/* Hover en el botón */
 .form-btn input:hover {
     background: #0056b3;
+    transform: scale(1.05);
 }
 
-/* Estilos para dispositivos móviles */
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos responsivos */
 @media (max-width: 400px) {
     .container {
         width: 90%;
