@@ -1,5 +1,5 @@
-<?php require_once "views/shared/navbar.php"; ?>
-<link href="../../assets/login/login.css" rel="stylesheet">
+
+<link href="./assets/login/register.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -14,7 +14,7 @@
                 <input type="password" class="form-control" name="password" placeholder="Contraseña: " required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="repeat_password" placeholder="Repite la contraseña: " required>
+                <input type="password" class="form-control" name="repeat_password" placeholder="Repite la contraseña: " required>
             </div>
             <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Enviar" name="submit">
