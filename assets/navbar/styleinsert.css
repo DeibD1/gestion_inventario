@@ -1,0 +1,28 @@
+.card {
+  background-color: #334155;
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+.form-control {
+  background-color: #475569;
+  color: white;
+  border: none;
+}
+.form-control::placeholder {
+  color: #cbd5e1;
+}
+.btn-primary {
+  background-color: #2563eb;
+  border: none;
+  width: 100%;
+}
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.titulo_register {
+  color: white;
+}

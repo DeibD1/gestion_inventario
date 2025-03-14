@@ -7,35 +7,43 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="./assets/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/navbar/style.css" rel="stylesheet">
+    <link href="./assets/navbar/styleedit.css" rel="stylesheet">
 </head>
 <body>
-    
-<?php require_once "views/shared/navbar.php"; ?>
 
+    <?php require_once "views/shared/navbar.php"; ?>
 
+    <div class="container">
+        <h1 class="text-center text-light mb-4">Actualizar Proveedor</h1>
 
-<form action="index.php?controlador=Proveedor&accion=update" method="post" > 
-    <h1 class="text-center my-5"><?= $data['titulo'] ?></h1>
-    <div class="card border-primary mb-3 mx-auto" style="max-width: 40rem;" >
-        <div class="card-body">
-
+        <form action="index.php?controlador=Proveedor&accion=update" method="post" 
+              class="card p-4 shadow-lg bg-opacity-10 border-primary rounded mx-auto" style="max-width: 35rem; background-color: rgba(255, 255, 255, 0.1);">
+              
             <input type="hidden" name="id_proveedor" value="<?=  $data['proveedor']['id']?>">
 
-            <label for="nombre" class="form-label mt-4">Nombre</label>
-            <input type="text" required class="form-control" placeholder="Nombre del proveedor" name="nombre" value="<?= $data['proveedor']['nombre']?>">
-            
-            <label for="telefono" class="form-label mt-4">Telefono</label>
-            <input type="text" required class="form-control" placeholder="Telefono del proveedor" name="telefono" value="<?= $data['proveedor']['telefono']?>">
+            <label for="nombre" class="form-label text-light mt-3">Nombre</label>
+            <input type="text" required class="form-control bg-dark text-light border-secondary rounded-3"
+                   placeholder="Nombre del proveedor" name="nombre" value="<?= $data['proveedor']['nombre']?>">
 
-            <label for="direccion" class="form-label mt-4">Direccion</label>
-            <input type="text" required class="form-control" placeholder="Direccion del proveedor" name="direccion" value="<?= $data['proveedor']['direccion']?>">
+            <label for="telefono" class="form-label text-light mt-3">Teléfono</label>
+            <input type="text" required class="form-control bg-dark text-light border-secondary rounded-3"
+                   placeholder="Teléfono del proveedor" name="telefono" value="<?= $data['proveedor']['telefono']?>">
 
-            <label for="email" class="form-label mt-4">Email</label>
-            <input type="email" required class="form-control" placeholder="Email del proveedor" name="email" value="<?= $data['proveedor']['email']?>">
+            <label for="direccion" class="form-label text-light mt-3">Dirección</label>
+            <input type="text" required class="form-control bg-dark text-light border-secondary rounded-3"
+                   placeholder="Dirección del proveedor" name="direccion" value="<?= $data['proveedor']['direccion']?>">
 
-            <input type="submit" class="btn btn-primary mt-4" value="Editar Proveedor">
-        </div>
+            <label for="email" class="form-label text-light mt-3">Email</label>
+            <input type="email" required class="form-control bg-dark text-light border-secondary rounded-3"
+                   placeholder="Email del proveedor" name="email" value="<?= $data['proveedor']['email']?>">
+
+            <div class="text-center mt-4">
+                <input type="submit" class="btn btn-primary w-100 rounded-pill" value="Actualizar Proveedor">
+            </div>
+        </form>
     </div>
-</form>
 
-<?php require_once "views/shared/footer.php"; ?>
+    <?php require_once "views/shared/footer.php"; ?>
+
+</body>
+</html>

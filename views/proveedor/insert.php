@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="./assets/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/navbar/style.css" rel="stylesheet">
+    <link href="./assets/navbar/styleinsert.css" rel="stylesheet">
 </head>
 <body>
     
@@ -15,7 +16,7 @@
 
 <form action="index.php?controlador=Proveedor&accion=store" method="post" >
 
-    <h1 class="text-center my-5"><?= $data['titulo'] ?></h1>
+    <h1 class="text-center my-5 titulo_register"><?= $data['titulo'] ?></h1>
     <div class="card border-primary mb-3 mx-auto" style="max-width: 40rem;" >
         <div class="card-body">
             <label for="nombre" class="form-label mt-4">Nombre</label>

@@ -14,7 +14,9 @@
             </div>
             <div class="form-btn">
                 <input type="submit" class="btn btn-primary" value="Entrar" name="submit">
+                <a href="index.php?controlador=User&accion=register" class="btn btn-primary">Registrarse</a>
             </div>
+   
         </form>
     </div>
 </body>
