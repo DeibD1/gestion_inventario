@@ -1,0 +1,45 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+  height: 100vh; /* Ocupa toda la pantalla */
+  width: 100%;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.table-custom {
+  width: 90%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.table th,
+.table td {
+  color: black;
+  text-align: center;
+  padding: 15px;
+}
+
+.table th {
+  background: rgba(255, 255, 255, 0.2);
+}
