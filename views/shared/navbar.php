@@ -1,6 +1,6 @@
 <nav class="navbar">
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <div class="logo">📦 Software Gestión de Inventario</div>
+        <div class="logo">Software Gestión de Inventario</div>
         <a href="index.php?controlador=User&accion=login" class="logout">Cerrar Sesión</a>
     </nav>
 

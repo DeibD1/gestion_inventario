@@ -7,14 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="./assets/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/navbar/style.css" rel="stylesheet">
-    <link href="./assets/navbar/stylepag.css" rel="stylesheet">
+    <link href="./assets/proveedores/index/style.css" rel="stylesheet">
 </head>
 <body>
     
 <?php require_once "views/shared/navbar.php"; ?>
 
 <div class="container">
-    <h1 class="titulo">Listado de Proveedores</h1>
+    <h1 class="titulo"><?= $data['titulo'] ?></h1>
     <div class="table-responsive">
         <table class="table table-hover table-custom">
             <thead>
@@ -38,15 +38,41 @@
                                class="btn btn-warning">Editar</a>
                         </td>
                         <td>
-                            <a href="index.php?controlador=Proveedor&accion=delete&idProveedor=<?= $proveedor['id'] ?>" 
-                               class="btn btn-danger">Eliminar</a>
+                            <button class="btn btn-danger" onclick="confirmDelete(<?= $proveedor['id'] ?>)">Eliminar</button>
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
     </div>
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+            </div>
+            <div class="modal-body mensaje-eliminar" style="color: black;">
+                ¿Estás seguro de que deseas eliminar este proveedor?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
 </div>
+</div>
+<script>
+    function confirmDelete(idProveedor) {
+        let confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        confirmDeleteBtn.href = `index.php?controlador=Proveedor&accion=delete&idProveedor=${idProveedor}`;
+        
+        let modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+        modal.show();
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <?php require_once "views/shared/footer.php"; ?>
 
