@@ -17,15 +17,15 @@ function cargarControlador($controlador)
 }
 
 
-function cargarAccion($controlador, $accion, $idProveedor=null)
+function cargarAccion($controlador, $accion, $id=null)
 {   
     
     if(isset($accion) && method_exists($controlador, $accion))
     {
-        if($idProveedor == null){
+        if($id == null){
             $controlador->$accion();
         }else{
-            $controlador->$accion($idProveedor);
+            $controlador->$accion($id);
         }
     } else {
         $controlador->ACCION_PRINCIPAL;

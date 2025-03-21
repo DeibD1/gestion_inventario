@@ -1,0 +1,38 @@
+<?php 
+
+class Producto{
+
+    private $db;
+    private $productos;
+
+    public function __construct(){
+        $this->db = Conexion::conectar();
+        $this->productos = [];
+    }
+
+    public function listarProductos(){
+        $sql = "SELECT prod.*, prov.nombre as proveedor 
+        FROM producto prod INNER JOIN proveedor prov ON prod.id_proveedor = prov.id ORDER by prod.cantidad;";
+        $resultado = $this->db->query($sql);
+
+        if(!$resultado){
+            echo "Lo sentimos, este sitio esta experimentando problemas";
+            exit;
+        }  
+
+        while($row = $resultado->fetch_assoc()){
+            $this->productos[] = $row;
+        }
+
+        return $this->productos;
+    }
+
+
+    public function delete($idProducto){
+        $sql = "DELETE FROM producto WHERE id=$idProducto";
+        $this->db->query($sql);
+    }
+
+}
+
+?>

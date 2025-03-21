@@ -9,7 +9,7 @@
         <ul class="menu">
             <li onclick="toggleSubmenu(1)">📋 Inventario <span class="arrow">▶</span>
                 <ul class="submenu" id="submenu-1">
-                    <li><a href="#">📦 Productos</a></li>
+                    <li><a href="index.php?controlador=Producto&accion=index">📦 Productos</a></li>
                     <li onclick="toggleSubmenu(12)">📊 Reportes <span class="arrow">▶</span>
                         <ul class="submenu" id="submenu-12">
                             <li><a href="#">Ventas</a></li>
