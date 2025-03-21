@@ -23,13 +23,10 @@ class User {
     
         $stmt->close();
     
-        // Encriptar la contraseña antes de guardarla
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    
-        // Insertar el nuevo usuario
+        // Insertar el nuevo usuario (⚠️ Contraseña sin encriptar)
         $sql = "INSERT INTO users(full_name, email, password) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("sss", $name, $email, $hashed_password);
+        $stmt->bind_param("sss", $name, $email, $password);
         
         $result = $stmt->execute();
         $stmt->close();
@@ -38,22 +35,40 @@ class User {
     }
     
 
-    // Método para iniciar sesión
     public function login($email, $password) {
-        $sql = "SELECT * FROM users WHERE email = ?";
+        $sql = "SELECT id, full_name, email, password FROM users WHERE email = ?";
         $stmt = $this->db->prepare($sql);
+    
+        if (!$stmt) {
+            die("Error en prepare: " . $this->db->error);
+        }
+    
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
+        $resultado = $stmt->get_result();
     
-        if ($user && $user['password'] === $password) { 
-            return $user; // Usuario autenticado
+        if (!$resultado) {
+            die("Error en get_result: " . $this->db->error);
         }
-        
-        return false; // Usuario no encontrado o contraseña incorrecta
-    }
     
-}
+        if ($resultado->num_rows === 1) {
+            $user = $resultado->fetch_assoc();
+            $stored_password = $user["password"];  // ⚠️ Contraseña en texto plano
 
+            // Comparar contraseñas directamente (sin `password_verify()`)
+            if ($password === $stored_password) {
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION["id"] = $user["id"];
+                $_SESSION["fullname"] = $user["full_name"];
+                return true;
+            } else {
+                return false; // ❌ Contraseña incorrecta
+            }
+        } else {
+            return false; // ❌ Usuario no encontrado
+        }
+    }
+}
 ?>

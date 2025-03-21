@@ -27,8 +27,6 @@ header("Location: index.php?controlador=User&accion=login");
     }
 }
 
-    
-
     // Cargar la vista de registro
     public function register() {
         require_once "views/users/registration.php";
@@ -39,28 +37,34 @@ header("Location: index.php?controlador=User&accion=login");
         require_once "views/users/login.php";
     }
 
-    // Verificar login
     public function verificarLogin() {
         session_start(); // Asegurar que la sesión está activa
+        echo "✅ verificarLogin() se está ejecutando<br>";
     
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST["email"];
             $password = $_POST["password"];
     
+            echo "✅ Llamando a login() con email: " . htmlspecialchars($email) . "<br>";
+    
             $user = $this->users->login($email, $password);
     
             if ($user) {
+                echo "✅ Login exitoso, redirigiendo...<br>";
                 $_SESSION["user_id"] = $user["id"];
                 $_SESSION["user_name"] = $user["full_name"];
                 header("Location: index.php?controlador=proveedor&accion=index");
                 exit();
             } else {
+                echo "❌ Error de login<br>";
                 $_SESSION["error"] = "Usuario o contraseña incorrecto";
                 header("Location: index.php?controlador=User&accion=login");
-                exit(); // Detiene la ejecución para ver si el mensaje aparece
+                exit();
             }
         }
     }
+    
+    
     
     
 
@@ -71,5 +75,6 @@ header("Location: index.php?controlador=User&accion=login");
         exit();
     }
 }
+
 
 ?>
