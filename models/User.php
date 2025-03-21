@@ -9,7 +9,6 @@ class User {
         $this->users = [];
     }
 
-    // Método para registrar un usuario
     public function register($name, $email, $password) {
         // Verificar si el correo ya existe
         $stmt = $this->db->prepare("SELECT id FROM users WHERE email = ?");
@@ -18,16 +17,26 @@ class User {
         $stmt->store_result();
     
         if ($stmt->num_rows > 0) {
-            return false; // El usuario ya existe
+            $stmt->close();
+            return false; 
         }
     
-        // Insertar el nuevo usuario si no existe
+        $stmt->close();
+    
+        // Encriptar la contraseña antes de guardarla
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    
+        // Insertar el nuevo usuario
         $sql = "INSERT INTO users(full_name, email, password) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("sss", $name, $email, $password);
+        $stmt->bind_param("sss", $name, $email, $hashed_password);
         
-        return $stmt->execute();
+        $result = $stmt->execute();
+        $stmt->close();
+        
+        return $result;
     }
+    
 
     // Método para iniciar sesión
     public function login($email, $password) {
