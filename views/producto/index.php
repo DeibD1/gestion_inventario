@@ -39,7 +39,7 @@
                             </button>
                         </td>
                         <td>
-                            <a href="index.php?controlador=Proveedor&accion=edit&idProveedor=<?= $proveedor['id'] ?>" 
+                            <a href="index.php?controlador=Producto&accion=edit&idProducto=<?= $producto['id'] ?>" 
                                class="btn btn-warning">Editar</a>
                         </td>
                         <td>

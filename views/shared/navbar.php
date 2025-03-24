@@ -7,28 +7,12 @@
     <!-- Menú Lateral -->
     <div class="sidebar" id="sidebar">
         <ul class="menu">
+
             <li onclick="toggleSubmenu(1)">📋 Inventario <span class="arrow">▶</span>
                 <ul class="submenu" id="submenu-1">
-                    <li onclick="toggleSubmenu(12)">Productos <span class="arrow">▶</span>
-                        <ul class="submenu" id="submenu-12">
-                            <li><a href="#">Registro de Productos</a></li>
-                            <li><a href="index.php?controlador=Producto&accion=index">📦 Productos</a></li>
-                            <li><a href="#">Stock</a></li>
-                        </ul>
-                    </li>
-                    <li onclick="toggleSubmenu(12)">📊 Reportes <span class="arrow">▶</span>
-                        <ul class="submenu" id="submenu-12">
-                            <li><a href="#">Ventas</a></li>
-                            <li><a href="#">Compras</a></li>
-                            <li><a href="#">Stock</a></li>
-                        </ul>
-                    </li>
-                    <li onclick="toggleSubmenu(13)">🔄 Movimientos <span class="arrow">▶</span>
-                        <ul class="submenu" id="submenu-13">
-                            <li><a href="#">Entradas</a></li>
-                            <li><a href="#">Salidas</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="index.php?controlador=Producto&accion=index">📜 Lista de Productos</a></li>
+                    <li><a href="index.php?controlador=Producto&accion=insert">✍ Registrar Productos</a></li>
+                    <li><a href="#">📑 Historial de Compras</a></li>
                 </ul>
             </li>
 

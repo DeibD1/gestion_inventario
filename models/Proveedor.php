@@ -57,5 +57,21 @@ class Proveedor{
         $sql = "DELETE FROM proveedor WHERE id=$idProveedor";
         $this->db->query($sql);
     }
+
+    public function seleccionarProveedores(){
+        $sql = "SELECT id, nombre FROM proveedor ORDER BY nombre";
+        $resultado = $this->db->query($sql);
+
+        if(!$resultado){
+            echo "Lo sentimos, este sitio esta experimentando problemas";
+            exit;
+        }  
+
+        while($row = $resultado->fetch_assoc()){
+            $this->proveedores[] = $row;
+        }
+
+        return $this->proveedores;
+    }
 }
 ?>
