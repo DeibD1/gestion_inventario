@@ -41,7 +41,7 @@ session_start(); // Esto debe estar al inicio
             });
         });
     </script>";
-    unset($_SESSION["error"]); // Elimina la variable para que no vuelva a mostrarse
+    unset($_SESSION["error"]); 
 }
 ?>
 </body>
