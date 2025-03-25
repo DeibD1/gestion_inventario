@@ -12,7 +12,7 @@
                 <ul class="submenu" id="submenu-1">
                     <li><a href="index.php?controlador=Producto&accion=index">📜 Lista de Productos</a></li>
                     <li><a href="index.php?controlador=Producto&accion=insert">✍ Registrar Productos</a></li>
-                    <li><a href="#">📑 Historial de Compras</a></li>
+                    <li><a href="index.php?controlador=Producto&accion=reporte">📑 Reporte de Inventario</a></li>
                 </ul>
             </li>
 

@@ -56,7 +56,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
-                <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Eliminar</a>
+                <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Aceptar</a>
             </div>
         </div>
     </div>

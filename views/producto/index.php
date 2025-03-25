@@ -60,8 +60,8 @@
                     ¿Estás seguro de que deseas eliminar este producto?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Eliminar</a>
+                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Aceptar</a>
                 </div>
             </div>
         </div>

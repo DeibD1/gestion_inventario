@@ -51,13 +51,13 @@ html {
 }
 
 .btn-cancelar {
-  background-color: #ddff00;
-  border-color: #ddff00;
-  color: black;
+  background-color: #2d74c5;
+  border-color: #2d74c5;
+  color: #fff;
 }
 
 .btn-cancelar:hover {
-  background-color: #b2cb0d;
-  border-color: #b2cb0d;
-  color: black;
+  background-color: #0854ab;
+  border-color: #0854ab;
+  color: #fff;
 }

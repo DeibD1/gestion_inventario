@@ -17,6 +17,7 @@ class ProductoController{
         $data['productos'] = $this->producto->listarProductos();
         require_once "views/producto/index.php";
     }
+    
 
     public function insert(){   
         $data['titulo'] = "Registra un producto";
@@ -67,6 +68,12 @@ class ProductoController{
         $this->producto->delete($idProducto);
         header("Location: index.php?controlador=Producto&accion=index");
         exit();
+    }
+
+    public function reporte(){
+        $data['titulo'] = "Listado de Productos";
+        $data['productos'] = $this->producto->listarProductos();
+        require_once "views/producto/reporte.php";
     }
 
 }
