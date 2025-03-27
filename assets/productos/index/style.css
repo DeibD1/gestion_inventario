@@ -50,18 +50,6 @@ html {
   background: rgba(255, 255, 255, 0.2);
 }
 
-.btn-cancelar {
-  background-color: #ddff00;
-  border-color: #ddff00;
-  color: black;
-}
-
-.btn-cancelar:hover {
-  background-color: #b2cb0d;
-  border-color: #b2cb0d;
-  color: black;
-}
-
 .modal-content {
   background-color: #e6eaee;
   border-radius: 10px;
