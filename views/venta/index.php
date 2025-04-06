@@ -15,5 +15,4 @@
 
 <h1>VENTAS REGISTRADAS</h1>
 
-
 <?php require_once "views/shared/footer.php"; ?>
