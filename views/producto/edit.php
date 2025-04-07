@@ -37,7 +37,7 @@
             
             
             <label for="fecha_ingreso" class="form-label mt-4">Fecha de Ingreso</label>
-            <input type="date" required class="form-control" placeholder="Fecha de ingreso del producto" name="fecha_ingreso" value="<?= $data['producto']['fecha_ingreso']?>">
+            <input type="date" required class="form-control" placeholder="Fecha de ingreso del producto" name="fecha_ingreso" value="<?= $data['producto']['fecha_ingreso']?>" min="2025-01-01" max="2035-12-31">
 
             <label for="proveedor" class="form-label mt-4">Proveedor</label>
             <select class="form-control" required name="proveedor">

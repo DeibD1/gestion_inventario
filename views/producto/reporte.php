@@ -103,8 +103,8 @@ $options->set(array('isRemoteEnabled' => true));
 $dompdf->setOptions($options); 
 
 $dompdf->loadHtml($html);
-$dompdf->setPaper('letter');
-// $dompdf->setPaper('A4', 'landscape');
+// $dompdf->setPaper('letter');
+$dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 $dompdf->stream("reporte_productos.pdf", array("Attachment" => true));
 
