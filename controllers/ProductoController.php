@@ -27,8 +27,8 @@ class ProductoController{
 
     public function store(){
 
-        $nombre = $_POST['nombre'];
-        $descripcion = $_POST['descripcion'];
+        $nombre = trim($_POST['nombre']);
+        $descripcion = trim($_POST['descripcion']);
         $cantidad = $_POST['cantidad'];
         $precio_neto = $_POST['precio_neto'];
         $precio_venta = $_POST['precio_venta'];
@@ -50,8 +50,8 @@ class ProductoController{
 
     public function update(){
         $id_producto = $_POST['id_producto'];
-        $nombre = $_POST['nombre'];
-        $descripcion = $_POST['descripcion'];
+        $nombre = trim($_POST['nombre']);
+        $descripcion = trim($_POST['descripcion']);
         $cantidad = $_POST['cantidad'];
         $precio_neto = $_POST['precio_neto'];
         $precio_venta = $_POST['precio_venta'];

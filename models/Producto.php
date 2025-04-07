@@ -55,6 +55,27 @@ class Producto{
         $this->db->query($sql);
     }
 
+    public function listarProductosVenta(){
+        $sql = "SELECT id, nombre, cantidad, precio_venta FROM producto ORDER BY nombre;";
+        $resultado = $this->db->query($sql);
+
+        if(!$resultado){
+            echo "Lo sentimos, este sitio esta experimentando problemas";
+            exit;
+        }  
+
+        while($row = $resultado->fetch_assoc()){
+            $this->productos[] = $row;
+        }
+        return $this->productos;
+    }
+
+    public function updateCantidad($id_producto, $cantidad){
+        $stmt = $this->db->prepare("UPDATE producto SET cantidad = cantidad - ? WHERE id = ?");
+        $stmt->bind_param("ii", $cantidad, $id_producto);
+        $stmt->execute();
+    }
+
 }
 
 ?>
