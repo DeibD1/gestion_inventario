@@ -8,6 +8,8 @@
     <link href="./assets/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/navbar/style.css" rel="stylesheet">
     <link href="./assets/ventas/insert/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
     
@@ -158,9 +160,15 @@
         const productoSeleccionado = productosInfo.find(p => p.nombre === nombreProducto);
 
         if (!productoSeleccionado) {
-          alert("Producto no válido o no encontrado.");
-          return;
-        }
+  Swal.fire({
+    icon: 'error',
+    title: 'Producto no válido',
+    text: 'El producto ingresado no existe o no se encuentra en la base de datos.',
+    confirmButtonText: 'Aceptar'
+  });
+  return;
+}
+
 
         const stockDisponible = parseInt(productoSeleccionado.cantidad);
         const id = productoSeleccionado.id;
@@ -168,20 +176,35 @@
         const precioFormateado = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(precio);
 
         if (!nombreProducto || !cantidad || !precio) {
-          alert("Por favor, completa todos los campos antes de agregar un producto.");
-          return;
-        }
+  Swal.fire({
+    icon: 'warning',
+    title: 'Campos incompletos',
+    text: 'Por favor, completa todos los campos antes de agregar un producto.',
+    confirmButtonText: 'Entendido'
+  });
+  return;
+}
+if (cantidad > stockDisponible) {
+  Swal.fire({
+    icon: 'warning',
+    title: 'Stock insuficiente',
+    text: `No hay suficiente stock disponible. Solo hay ${stockDisponible} unidades en bodega.`,
+    confirmButtonText: 'Entendido'
+  });
+  return;
+}
 
-        if (cantidad > stockDisponible) {
-          alert(`No hay suficiente stock disponible. Solo hay ${stockDisponible} unidades en bodega.`);
-          return;
-        }
 
         const filas = document.querySelectorAll("#cuerpoTabla tr");
         for (let fila of filas) {
           const idFila = fila.querySelector("td").getAttribute("data-id");
           if (idFila === id.toString()) {
-            alert("Este producto ya ha sido agregado a la venta.");
+            Swal.fire({
+            icon: 'info',
+           title: 'Producto duplicado',
+          text: 'Este producto ya ha sido agregado a la venta.',
+         confirmButtonText: 'Aceptar'
+});
             document.getElementById("buscarProducto").value = "";
             document.getElementById("cantidadProducto").value = "1";
             document.getElementById("sugerencias").style.display = "none";
@@ -222,11 +245,25 @@
         const totalVenta = parseInt(pieTabla.replace(/[^\d]/g, ""), 10);
 
         if (filas.length === 0) {
-          alert("No hay productos en la venta.");
+          Swal.fire({
+  icon: 'warning',
+  title: 'Venta vacía',
+  text: 'No hay productos en la venta.',
+  timer: 200,
+  showConfirmButton: false
+});
+
           return;
         }
         if (!fecha) {
-          alert("Debes seleccionar la fecha de la venta.");
+          Swal.fire({
+  icon: 'warning',
+  title: 'Fecha requerida',
+  text: 'Debes seleccionar la fecha de la venta.',
+  timer: 200,
+  showConfirmButton: false
+});
+
           return;
         }
 
