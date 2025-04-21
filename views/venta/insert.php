@@ -188,7 +188,7 @@ if (cantidad > stockDisponible) {
   Swal.fire({
     icon: 'warning',
     title: 'Stock insuficiente',
-    text: `No hay suficiente stock disponible. Solo hay ${stockDisponible} unidades en bodega.`,
+    text: `No hay suficiente stock disponible. Solo existen ${stockDisponible} unidades en bodega.`,
     confirmButtonText: 'Entendido'
   });
   return;
@@ -246,23 +246,23 @@ if (cantidad > stockDisponible) {
 
         if (filas.length === 0) {
           Swal.fire({
-  icon: 'warning',
-  title: 'Venta vacía',
-  text: 'No hay productos en la venta.',
-  timer: 200,
-  showConfirmButton: false
-});
+          icon: 'warning',
+          title: 'Venta vacía',
+          text: 'No hay productos en la venta.',
+          timer: 1500,
+          showConfirmButton: false
+        });
 
-          return;
-        }
-        if (!fecha) {
-          Swal.fire({
-  icon: 'warning',
-  title: 'Fecha requerida',
-  text: 'Debes seleccionar la fecha de la venta.',
-  timer: 200,
-  showConfirmButton: false
-});
+                  return;
+                }
+                if (!fecha) {
+                  Swal.fire({
+          icon: 'warning',
+          title: 'Fecha requerida',
+          text: 'Debes seleccionar la fecha de la venta.',
+          timer: 1500,
+          showConfirmButton: false
+        });
 
           return;
         }
