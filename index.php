@@ -17,7 +17,11 @@
                 if(isset($_GET['idProducto'])){
                     cargarAccion($controlador, $_GET['accion'], $_GET['idProducto']);
                 }else{
-                    cargarAccion($controlador, $_GET['accion']);
+                    if(isset($_GET['idVenta'])){
+                        cargarAccion($controlador, $_GET['accion'], $_GET['idVenta']);
+                    }else{
+                        cargarAccion($controlador, $_GET['accion']);
+                    }
                 }
             }
         }else{

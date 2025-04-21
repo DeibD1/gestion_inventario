@@ -1,4 +1,6 @@
 <?php 
+    require_once './lib/dompdf/autoload.inc.php';
+    use Dompdf\Dompdf;
 
 class VentaController{
     private $venta;
@@ -13,7 +15,7 @@ class VentaController{
 
     public function index(){
         $data['titulo'] = "Listado de Ventas";
-        $ventas = $this->venta->listarVenta();
+        $ventas = $this->venta->listarVentas();
     
         $ventasFormateadas = [];
         foreach ($ventas as $venta) {
@@ -22,6 +24,9 @@ class VentaController{
         }
     
         $data['ventas'] = $ventasFormateadas;
+
+        $data['idVenta'] = isset($_GET['idVenta']) ? $_GET['idVenta'] : null;
+
         require_once "views/venta/index.php";
     }
 
@@ -49,10 +54,59 @@ class VentaController{
             $this->producto->updateCantidad($idProducto, $cantidadVenta);
         }
 
-        header("Location: index.php?controlador=Venta&accion=index");
+        header("Location: index.php?controlador=Venta&accion=index&idVenta=$idVenta");
         exit();
     }
+
+    public function verInformacionVenta($idVenta){
+        $data['titulo'] = "Listado de Ventas";
+        $ventas = $this->venta->listarVentas();
+        $ventasFormateadas = [];
+        foreach ($ventas as $venta) {
+            $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
+            $ventasFormateadas[] = $venta;
+        }
+        $data['ventas'] = $ventasFormateadas;
+
+        $ventaSeleccionada = $this->venta->listarVenta($idVenta);
+        $data['productosVendidos'] = $this->venta->listarProductosVenta($idVenta);
+        $data['infoVenta'] = true;
+
+        require_once "views/venta/index.php";
+    }
+
+    public function generarFactura($idVenta) {
+        $data['nombreEmpresa'] = "Empresa Importante del Sector";
+        $data['NIT'] = "2342343453";
+        $data['direccion'] = "Barrio Picaleña #45-34";
+        $data['telefono'] = "3452345324";
+
+        $ventaSeleccionada = $this->venta->listarVenta($idVenta);
+        $ventaSeleccionada['total'] = rtrim(rtrim($ventaSeleccionada['total'], '0'), '.');
+
+        $productosVendidos = $this->venta->listarProductosVenta($idVenta);
+
+        foreach ($productosVendidos as &$producto) {
+            $producto['precio_venta'] = rtrim(rtrim($producto['precio_venta'], '0'), '.');
+        }
+        unset($producto); 
+
+        ob_start();
+        include "views/venta/factura.php";
+        $html = ob_get_clean();
+
+        $dompdf = new Dompdf();
+
+        $options = $dompdf->getOptions();
+        $options->set(['isRemoteEnabled' => true]);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter');
+        $dompdf->render();
+
+        $dompdf->stream("factura_venta_$idVenta.pdf", ["Attachment" => true]);
+    }
+
 }
-
-
 ?>

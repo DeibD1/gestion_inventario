@@ -50,6 +50,10 @@ html {
   background: rgba(255, 255, 255, 0.2);
 }
 
+.table-responsive {
+  margin-bottom: 2rem;
+}
+
 .modal-content {
   background-color: #e6eaee;
   border-radius: 10px;
