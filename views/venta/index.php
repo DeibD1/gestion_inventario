@@ -35,10 +35,10 @@
                         <a href="index.php?controlador=Venta&accion=verInformacionVenta&idVenta=<?= $venta['id'] ?>" class="btn btn-primary">Ver Mas</a>
                         </td>
                         <td>
-                            <a href="index.php?controlador=Venta&accion=generarFactura&idVenta=<?= $venta['id'] ?>" class="btn btn-primary">Generar Factura</a>
+                            <a href="index.php?controlador=Venta&accion=generarFactura&idVenta=<?= $venta['id'] ?>" class="btn btn-warning">Generar Factura</a>
                         </td>
                         <td>
-                            <button class="btn btn-danger">Eliminar</button>
+                            <button class="btn btn-danger" onclick="confirmDelete(<?= $venta['id'] ?>)">Eliminar</button>
                         </td>
                     </tr>
                 <?php } ?>
@@ -86,6 +86,23 @@
         </div>
     </div>
 
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"> 
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                </div>
+                <div class="modal-body mensaje-eliminar" style="color: black;">
+                    ¿Estás seguro de que deseas eliminar esta venta?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -111,6 +128,16 @@
         }
     </script>
 <?php endif; ?>
+
+<script>
+    function confirmDelete(idVenta) {
+        let confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        confirmDeleteBtn.href = `index.php?controlador=Venta&accion=delete&idVenta=${idVenta}`;
+        
+        let modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+        modal.show();
+    }
+</script>
 
 </body>
 </html>

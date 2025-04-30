@@ -108,5 +108,11 @@ class VentaController{
         $dompdf->stream("factura_venta_$idVenta.pdf", ["Attachment" => true]);
     }
 
+    public function delete($idVenta){
+        $this->venta->delete($idVenta);
+        header("Location: index.php?controlador=Venta&accion=index");
+        exit();
+    }
+
 }
 ?>

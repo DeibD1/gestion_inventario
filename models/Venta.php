@@ -63,4 +63,9 @@ class  Venta{
         return $this->ventas;
     }
 
+    public function delete($idVenta){
+        $sql = "DELETE FROM venta WHERE id=$idVenta";
+        $this->db->query($sql);
+    }
+
 }
