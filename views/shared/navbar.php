@@ -20,7 +20,6 @@
                 <ul class="submenu" id="submenu-2">
                     <li><a href="index.php?controlador=Proveedor&accion=index">📜 Lista de Proveedores</a></li>
                     <li><a href="index.php?controlador=Proveedor&accion=insert">✍ Registrar Proveedor</a></li>
-                    <li><a href="#">📑 Historial de Compras</a></li>
                 </ul>
             </li>
 

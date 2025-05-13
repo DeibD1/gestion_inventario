@@ -23,7 +23,7 @@
 
         <div class="campo">
           <label for="fechaVenta">Fecha de la venta:</label>
-          <input type="date" id="fechaVenta"  min="2025-01-01" max="2035-12-31"/>
+          <input type="date" id="fechaVenta" name="fecha" readonly />
         </div>
 
         <div class="campo">
@@ -87,6 +87,17 @@
     </div>
 
     <script>
+
+      window.onload = function () {
+        const hoy = new Date();
+        const yyyy = hoy.getFullYear();
+        const mm = String(hoy.getMonth() + 1).padStart(2, '0'); 
+        const dd = String(hoy.getDate()).padStart(2, '0');
+        const fechaActual = `${yyyy}-${mm}-${dd}`;
+        document.getElementById("fechaVenta").value = fechaActual;
+      };
+
+
       const productosSugeridos = <?= json_encode($data['nombre_productos'], JSON_UNESCAPED_UNICODE); ?>;
       const productosInfo = <?= json_encode($data['productos'], JSON_UNESCAPED_UNICODE); ?>;
 

@@ -75,6 +75,36 @@ class VentaController{
         require_once "views/venta/index.php";
     }
 
+    public function filtrarVentas(){
+
+        $totalMin = isset($_POST['totalMin']) && trim($_POST['totalMin']) !== '' ? $_POST['totalMin'] : null;
+        $totalMax = isset($_POST['totalMax']) && trim($_POST['totalMax']) !== '' ? $_POST['totalMax'] : null;
+        $fechaInicio = isset($_POST['fechaInicio']) && trim($_POST['fechaInicio']) !== '' ? $_POST['fechaInicio'] : null;
+        $fechaFin = isset($_POST['fechaFin']) && trim($_POST['fechaFin']) !== '' ? $_POST['fechaFin'] : null;
+        $estadoVenta = isset($_POST['estadoVenta']) ? $_POST['estadoVenta'] : null;
+
+        $data['titulo'] = "Listado de Ventas";
+        $ventas = $this->venta->listarVentasFiltradas($totalMin, $totalMax, $fechaInicio, $fechaFin, $estadoVenta);
+        $ventasFormateadas = [];
+        foreach ($ventas as $venta) {
+            $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
+            $ventasFormateadas[] = $venta;
+        }
+        $data['ventas'] = $ventasFormateadas;
+
+        $data['filtros'] = [
+            'totalMin' => $totalMin,
+            'totalMax' => $totalMax,
+            'fechaInicio' => $fechaInicio,
+            'fechaFin' => $fechaFin,
+            'estadoVenta' => $estadoVenta
+        ];
+
+        extract($data);
+
+        require_once "views/venta/index.php";
+    }
+
     public function generarFactura($idVenta) {
         $data['nombreEmpresa'] = "Empresa Importante del Sector";
         $data['NIT'] = "2342343453";
