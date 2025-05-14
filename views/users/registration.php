@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <link href="./assets/login/register.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -41,6 +44,7 @@
         </div>
         <div class="form-btn">
             <input type="submit" class="btn btn-primary" value="Enviar" name="submit">
+            <a href="index.php?controlador=User&accion=login" class="btn btn-primary">Volver</a>
         </div>
     </form>
 </div>
