@@ -30,12 +30,12 @@
             <div class="col-md-3">
                 <label for="fechaInicio" class="form-label">Fecha inicio</label>
                 <input type="date" class="form-control" id="fechaInicio" name="fechaInicio"
-                    value="<?= isset($filtros['fechaInicio']) ? htmlspecialchars($filtros['fechaInicio']) : '' ?>">
+                    value="<?= isset($filtros['fechaInicio']) ? htmlspecialchars($filtros['fechaInicio']) : '' ?>" required>
             </div>
             <div class="col-md-3">
                 <label for="fechaFin" class="form-label">Fecha fin</label>
                 <input type="date" class="form-control" id="fechaFin" name="fechaFin"
-                    value="<?= isset($filtros['fechaFin']) ? htmlspecialchars($filtros['fechaFin']) : '' ?>">
+                    value="<?= isset($filtros['fechaFin']) ? htmlspecialchars($filtros['fechaFin']) : '' ?>" required>
             </div>
             <div class="col-md-3">
                 <button type="submit" class="btn btn-success w-100">Generar Reporte</button>
