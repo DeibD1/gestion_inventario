@@ -75,6 +75,93 @@ class VentaController{
         require_once "views/venta/index.php";
     }
 
+    public function generarReportePDF() {
+    $estado = $_POST['estadoVenta'] ?? null;
+    $fechaInicio = $_POST['fecha_inicio'] ?? null;
+    $fechaFin = $_POST['fecha_fin'] ?? null;
+
+    date_default_timezone_set('America/Bogota'); // <- AÑADE ESTA LÍNEA AL INICIO
+
+    // Formatear fechas si vienen en dd/mm/yyyy
+    if ($fechaInicio) {
+        $fechaInicio = date('Y-m-d', strtotime(str_replace('/', '-', $fechaInicio)));
+    }
+
+    if ($fechaFin) {
+        $fechaFin = date('Y-m-d', strtotime(str_replace('/', '-', $fechaFin)));
+    }
+
+
+    require_once 'models/Venta.php';
+    $ventaModel = new Venta();
+    $ventas = $ventaModel->listarVentasPorEstadoYFechas($estado, $fechaInicio, $fechaFin);
+    
+
+    // Para depuración
+    $parametrosDebug = [
+        'estado' => $estado,
+        'fechaInicio' => $fechaInicio,
+        'fechaFin' => $fechaFin
+    ];
+
+    // Datos de la empresa
+    $nombreEmpresa = "Empresa Importante del Sector";
+    $NIT = "2342343453";
+    $direccion = "Barrio Picaleña #45-34";
+    $telefono = "3452345324";
+    $fechaGeneracion = date('Y-m-d H:i:s');
+
+    // Formatear ventas para el reporte
+    $ventasFormateadas = [];
+    foreach ($ventas as $venta) {
+        $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
+        $venta['estado'] = $venta['activo'] == 1 ? 'Activa' : 'Cancelada';
+        $ventasFormateadas[] = $venta;
+    }
+
+    // Filtros aplicados
+    $filtros = [
+        'estado' => $estado,
+        'fechaInicio' => $fechaInicio,
+        'fechaFin' => $fechaFin,
+        'debug' => $parametrosDebug
+    ];
+
+    // Preparar variables para la vista
+    $ventasReporte = $ventasFormateadas;
+    extract(compact('nombreEmpresa', 'NIT', 'direccion', 'telefono', 'fechaGeneracion', 'ventasReporte', 'filtros', 'parametrosDebug'));
+
+    // Cargar la vista
+    ob_start();
+    include "views/venta/reporte.php";
+    $html = ob_get_clean();
+
+    // Configurar DomPDF
+    $dompdf = new Dompdf();
+    $options = $dompdf->getOptions();
+    $options->set(['isRemoteEnabled' => true]);
+    $dompdf->setOptions($options);
+
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('letter', 'portrait');
+    $dompdf->render();
+
+    // Nombre del archivo
+    $nombreArchivo = "reporte_ventas";
+    if ($fechaInicio && $fechaFin) {
+        $nombreArchivo .= "_" . str_replace(['-', '/'], '_', $fechaInicio) . "_a_" . str_replace(['-', '/'], '_', $fechaFin);
+    }
+    if ($estado) {
+        $nombreArchivo .= "_" . strtolower($estado);
+    }
+    $nombreArchivo .= ".pdf";
+
+    // Descargar PDF
+    $dompdf->stream($nombreArchivo, ["Attachment" => true]);
+}
+
+
+
     public function filtrarVentas(){
 
         $totalMin = isset($_POST['totalMin']) && trim($_POST['totalMin']) !== '' ? $_POST['totalMin'] : null;
@@ -145,21 +232,34 @@ class VentaController{
     }
 
     public function reporteVentas(){
-        $data['titulo'] = "Generar Reporte de Ventas";
-        $ventas = $this->venta->listarVentas();
+    $data['titulo'] = "Generar Reporte de Ventas";
     
-        $ventasFormateadas = [];
-        foreach ($ventas as $venta) {
-            $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
-            $ventasFormateadas[] = $venta;
-        }
-    
-        $data['ventas'] = $ventasFormateadas;
-
-        $data['idVenta'] = isset($_GET['idVenta']) ? $_GET['idVenta'] : null;
-
-        require_once "views/venta/reporteVentas.php";
+    // Si se envió el formulario para generar el reporte
+    if (isset($_POST['generarReporte'])) {
+        // Redirigir a la función de generación de PDF con los parámetros de filtro
+        $estado = isset($_POST['estado']) ? $_POST['estado'] : '';
+        $fechaInicio = isset($_POST['fechaInicio']) ? $_POST['fechaInicio'] : '';
+        $fechaFin = isset($_POST['fechaFin']) ? $_POST['fechaFin'] : '';
+        
+        header("Location: index.php?controlador=Venta&accion=generarReportePDF" . 
+               "&estado=" . urlencode($estado) . 
+               "&fechaInicio=" . urlencode($fechaInicio) . 
+               "&fechaFin=" . urlencode($fechaFin));
+        exit();
     }
+    
+    // Si solo se está cargando la vista
+    $ventas = $this->venta->listarVentas();
+    $ventasFormateadas = [];
+    foreach ($ventas as $venta) {
+        $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
+        $ventasFormateadas[] = $venta;
+    }
+    
+    $data['ventas'] = $ventasFormateadas;
+    
+    require_once "views/venta/reporteVentas.php";
+}
 
 }
 ?>

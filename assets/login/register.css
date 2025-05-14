@@ -47,7 +47,7 @@ body {
 
 /* Estilos para los inputs */
 .form-group input {
-  width: 100%;
+  width: 93%;
   padding: 12px;
   margin: 10px 0;
   border: none;
@@ -71,22 +71,39 @@ body {
 }
 
 /* Botón de login */
-.form-btn input {
+
+/* Estilos para ambos botones (input y enlace) */
+.form-btn input[type="submit"],
+.form-btn a.btn {
   width: 100%;
-  padding: 12px;
+  padding: 12px 20px; /* Ajusta el padding vertical y horizontal */
   background: #007bff;
   border: none;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block; /* Para que el enlace se comporte como un botón */
+  line-height: 1.5; /* Asegura que el texto esté centrado verticalmente */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
+  margin: 5px 0; /* Espaciado entre botones */
 }
 
-/* Hover en el botón */
-.form-btn input:hover {
+/* Hover para ambos botones */
+.form-btn input[type="submit"]:hover,
+.form-btn a.btn:hover {
   background: #0056b3;
-  transform: scale(1.05);
+  transform: scale(1.02);
+}
+
+/* Contenedor de botones para alinearlos correctamente */
+.form-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre botones */
 }
 
 /* Animación de entrada */

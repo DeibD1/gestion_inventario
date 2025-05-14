@@ -1,0 +1,22 @@
+.titulo-reporte {
+  font-size: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  color: #ffffff;
+}
+
+.contenedor-formulario {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 0 2rem;
+}
+
+.formulario-reporte {
+  width: 100%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}

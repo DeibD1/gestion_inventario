@@ -25,6 +25,7 @@
             <div class="col-md-6">
                 <div class="buscador position-relative">
                     <input
+                        autocomplete="off"
                         class="form-control"
                         type="text"
                         id="buscarProducto"
@@ -194,6 +195,17 @@
 
         sugerenciasDiv.style.display = "block";
       }
+</script>
+<script>
+  // Cierra el menú de sugerencias si el usuario hace clic fuera
+  document.addEventListener("click", function (event) {
+    const input = document.getElementById("buscarProducto");
+    const sugerenciasDiv = document.getElementById("sugerencias");
+
+    if (!input.contains(event.target) && !sugerenciasDiv.contains(event.target)) {
+      sugerenciasDiv.style.display = "none";
+    }
+  });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
