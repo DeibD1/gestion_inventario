@@ -64,6 +64,8 @@ class Producto{
             exit;
         }  
 
+        $this->productos = [];
+
         while($row = $resultado->fetch_assoc()){
             $this->productos[] = $row;
         }
@@ -74,6 +76,29 @@ class Producto{
         $stmt = $this->db->prepare("UPDATE producto SET cantidad = cantidad - ? WHERE id = ?");
         $stmt->bind_param("ii", $cantidad, $id_producto);
         $stmt->execute();
+    }
+
+    public function listarProductosFiltrados($nombreFiltro) {
+        $sql = "SELECT prod.*, prov.nombre AS proveedor 
+                FROM producto prod 
+                INNER JOIN proveedor prov ON prod.id_proveedor = prov.id 
+                WHERE prod.nombre LIKE '%$nombreFiltro%' 
+                ORDER BY prod.cantidad";
+
+        $resultado = $this->db->query($sql);
+
+        if (!$resultado) {
+            echo "Lo sentimos, este sitio está experimentando problemas";
+            exit;
+        }
+
+        $this->productos = [];
+
+        while ($row = $resultado->fetch_assoc()) {
+            $this->productos[] = $row;
+        }
+
+        return $this->productos;
     }
 
 }

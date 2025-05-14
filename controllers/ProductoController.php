@@ -15,6 +15,8 @@ class ProductoController{
     public function index(){
         $data['titulo'] = "Listado de Productos";
         $data['productos'] = $this->producto->listarProductos();
+        $data['productosFiltro'] = $this->producto->listarProductosVenta();
+        $data['nombre_productos'] = array_map(fn($p) => $p['nombre'], $data['productosFiltro']);
         require_once "views/producto/index.php";
     }
     
@@ -74,6 +76,19 @@ class ProductoController{
         $data['titulo'] = "Listado de Productos";
         $data['productos'] = $this->producto->listarProductos();
         require_once "views/producto/reporte.php";
+    }
+
+    public function filtrarProductos(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nombreProducto = isset($_POST['nombreProducto']) ? trim($_POST['nombreProducto']) : '';
+
+            $data['titulo'] = "Listado de Productos";
+            $data['productos'] = $this->producto->listarProductosFiltrados($nombreProducto);
+            $data['productosFiltro'] = $this->producto->listarProductosVenta();
+            $data['nombre_productos'] = array_map(fn($p) => $p['nombre'], $data['productosFiltro']);
+            $data['nombreProducto'] = $nombreProducto; 
+            require_once "views/producto/index.php";
+        }
     }
 
 }

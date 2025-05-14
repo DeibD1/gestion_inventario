@@ -71,10 +71,14 @@
                         <td><?= $venta['total'] ?></td>
                         <td><?= $venta['activo'] == 1 ? 'Activa' : 'Cancelada' ?></td>
                         <td>
-                        <a href="index.php?controlador=Venta&accion=verInformacionVenta&idVenta=<?= $venta['id'] ?>" class="btn btn-primary">Ver Mas</a>
+                            <a href="index.php?controlador=Venta&accion=verInformacionVenta&idVenta=<?= $venta['id'] ?>" class="btn btn-primary">Ver Mas</a>
                         </td>
                         <td>
-                            <a href="index.php?controlador=Venta&accion=generarFactura&idVenta=<?= $venta['id'] ?>" class="btn btn-warning">Generar Factura</a>
+                            <?php if ($venta['activo'] == 1): ?>
+                                <a href="index.php?controlador=Venta&accion=generarFactura&idVenta=<?= $venta['id'] ?>" class="btn btn-warning">Generar Factura</a>
+                            <?php else: ?>
+                                <button class="btn btn-warning" disabled>Generar Factura</button>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <?php if ($venta['activo'] == 1): ?>

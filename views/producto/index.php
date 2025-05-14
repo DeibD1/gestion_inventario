@@ -14,11 +14,40 @@
 <?php require_once "views/shared/navbar.php"; ?>
 
 <div class="container">
+
+    <div>
+        <h4 class="titulo mb-3 text-center">Filtrar Productos</h4>
+        <form method="post" action="index.php?controlador=Producto&accion=filtrarProductos" class="row g-3 mb-5 align-items-end justify-content-center" style="max-width: 800px; margin: 0 auto;">
+            <div class="col-md-2">
+                <label class="form-label" for="buscarProducto">Nombre:</label>
+            </div>
+            <div class="col-md-6">
+                <div class="buscador position-relative">
+                    <input
+                        class="form-control"
+                        type="text"
+                        id="buscarProducto"
+                        name="nombreProducto"
+                        placeholder="Ingrese nombre del producto..."
+                        value="<?= isset($nombreProducto) ? htmlspecialchars($nombreProducto) : '' ?>"
+                        onkeyup="mostrarSugerencias()"
+                        onfocus="mostrarSugerencias(true)"
+                    />
+                    <div id="sugerencias" class="sugerencias position-absolute w-100"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success w-100">Buscar Producto</button>
+            </div>
+        </form>
+    </div>
+
     <h1 class="titulo"><?= $data['titulo'] ?></h1>
     <div class="table-responsive">
         <table class="table table-hover table-custom">
             <thead>
                 <tr>
+                    <th>Referencia</th>
                     <th>Nombre</th>
                     <th>Cantidad</th>
                     <th>Precio Neto</th>
@@ -29,6 +58,7 @@
             <tbody>
                 <?php foreach ($data['productos'] as $producto) { ?>
                     <tr class="lista">
+                        <td><?= $producto['id']?></td>
                         <td><?= $producto['nombre'] ?></td>
                         <td><?= $producto['cantidad'] ?></td>
                         <td><?= $producto['precio_neto'] ?></td>
@@ -111,7 +141,58 @@
 
         let modal = new bootstrap.Modal(document.getElementById('productDetailModal'));
         modal.show();
-    }
+    }  
+
+    const productosSugeridos = <?= json_encode($data['nombre_productos'], JSON_UNESCAPED_UNICODE); ?>;
+    const productosInfo = <?= json_encode($data['productosFiltro'], JSON_UNESCAPED_UNICODE); ?>;
+
+    function mostrarSugerencias(forzado = false) {
+        const input = document.getElementById("buscarProducto").value.toLowerCase();
+        const sugerenciasDiv = document.getElementById("sugerencias");
+        sugerenciasDiv.innerHTML = "";
+
+        if (input === "") {
+          sugerenciasDiv.innerHTML = "";
+          productosSugeridos.forEach((producto) => {
+            const div = document.createElement("div");
+            div.classList.add("sugerencia-item");
+            div.textContent = producto;
+            div.onclick = () => {
+              document.getElementById("buscarProducto").value = producto;
+              sugerenciasDiv.innerHTML = "";
+              sugerenciasDiv.style.display = "none";
+            };
+            sugerenciasDiv.appendChild(div);
+          });
+          sugerenciasDiv.style.display = "block";
+          return;
+        }
+
+        const sugerenciasFiltradas = input === "" && forzado
+          ? productosSugeridos 
+          : productosSugeridos.filter((producto) =>
+              producto.toLowerCase().includes(input)
+            );
+
+        if (sugerenciasFiltradas.length === 0) {
+          sugerenciasDiv.style.display = "none";
+          return;
+        }
+
+        sugerenciasFiltradas.forEach((producto) => {
+          const div = document.createElement("div");
+          div.classList.add("sugerencia-item");
+          div.textContent = producto;
+          div.onclick = () => {
+            document.getElementById("buscarProducto").value = producto;
+            sugerenciasDiv.innerHTML = "";
+            sugerenciasDiv.style.display = "none";
+          };
+          sugerenciasDiv.appendChild(div);
+        });
+
+        sugerenciasDiv.style.display = "block";
+      }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

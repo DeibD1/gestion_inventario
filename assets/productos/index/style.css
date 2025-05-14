@@ -109,3 +109,28 @@ html {
   border-color: #0854ab;
   color: #fff;
 }
+
+.buscador {
+  position: relative;
+}
+.sugerencias {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  color: #000;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  display: none;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.sugerencia-item {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.sugerencia-item:hover {
+  background: #ddd;
+}
