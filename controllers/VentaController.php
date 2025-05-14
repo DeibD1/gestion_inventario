@@ -144,5 +144,22 @@ class VentaController{
         exit();
     }
 
+    public function reporteVentas(){
+        $data['titulo'] = "Generar Reporte de Ventas";
+        $ventas = $this->venta->listarVentas();
+    
+        $ventasFormateadas = [];
+        foreach ($ventas as $venta) {
+            $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
+            $ventasFormateadas[] = $venta;
+        }
+    
+        $data['ventas'] = $ventasFormateadas;
+
+        $data['idVenta'] = isset($_GET['idVenta']) ? $_GET['idVenta'] : null;
+
+        require_once "views/venta/reporteVentas.php";
+    }
+
 }
 ?>

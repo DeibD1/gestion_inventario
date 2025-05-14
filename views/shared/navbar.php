@@ -26,7 +26,7 @@
                 <ul class="submenu" id="submenu-3">
                     <li><a href="index.php?controlador=Venta&accion=index">📂 Historial de Ventas</a></li>
                     <li><a href="index.php?controlador=Venta&accion=insert">📝 Registrar Venta</a></li>
-                    <li><a href="#">💰 Cuentas por Cobrar</a></li>
+                    <li><a href="index.php?controlador=Venta&accion=reporteVentas">💰 Generar Reporte de Ventas</a></li>
                 </ul>
             </li>
         </ul>

@@ -8,6 +8,7 @@
     <link href="./assets/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/navbar/style.css" rel="stylesheet">
     <link href="./assets/productos/index/style.css" rel="stylesheet">
+    <link href="./assets/productos/index/buscador.css" rel="stylesheet">
 </head>
 <body>
     
