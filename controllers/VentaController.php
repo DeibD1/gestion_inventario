@@ -76,89 +76,75 @@ class VentaController{
     }
 
     public function generarReportePDF() {
-    $estado = $_POST['estadoVenta'] ?? null;
-    $fechaInicio = $_POST['fecha_inicio'] ?? null;
-    $fechaFin = $_POST['fecha_fin'] ?? null;
+        $estado = $_POST['estadoVenta'] ?? null;
+        $fechaInicio = $_POST['fechaInicio'] ?? null;  
+        $fechaFin = $_POST['fechaFin'] ?? null;   
 
-    date_default_timezone_set('America/Bogota'); // <- AÑADE ESTA LÍNEA AL INICIO
+        date_default_timezone_set('America/Bogota'); 
 
-    // Formatear fechas si vienen en dd/mm/yyyy
-    if ($fechaInicio) {
-        $fechaInicio = date('Y-m-d', strtotime(str_replace('/', '-', $fechaInicio)));
+        if ($fechaInicio) {
+            $fechaInicio = date('Y-m-d', strtotime(str_replace('/', '-', $fechaInicio)));
+        }
+
+        if ($fechaFin) {
+            $fechaFin = date('Y-m-d', strtotime(str_replace('/', '-', $fechaFin)));
+        }
+
+        $ventas = $this->venta->listarVentasPorEstadoYFechas($estado, $fechaInicio, $fechaFin);
+        
+        $parametrosDebug = [
+            'estado' => $estado,
+            'fechaInicio' => $fechaInicio,
+            'fechaFin' => $fechaFin
+        ];
+
+        $nombreEmpresa = "Empresa Importante del Sector";
+        $NIT = "2342343453";
+        $direccion = "Barrio Picaleña #45-34";
+        $telefono = "3452345324";
+        $fechaGeneracion = date('Y-m-d H:i:s');
+
+        $ventasFormateadas = [];
+        foreach ($ventas as $venta) {
+            $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
+            $venta['estado'] = $venta['activo'] == 1 ? 'Activa' : 'Cancelada';
+            $ventasFormateadas[] = $venta;
+        }
+
+        $filtros = [
+            'estado' => $estado,
+            'fechaInicio' => $fechaInicio,
+            'fechaFin' => $fechaFin,
+            'debug' => $parametrosDebug
+        ];
+
+        $ventasReporte = $ventasFormateadas;
+        extract(compact('nombreEmpresa', 'NIT', 'direccion', 'telefono', 'fechaGeneracion', 'ventasReporte', 'filtros', 'parametrosDebug'));
+
+        ob_start();
+        include "views/venta/reporte.php";
+        $html = ob_get_clean();
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->set(['isRemoteEnabled' => true]);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter', 'portrait');
+        $dompdf->render();
+
+        $nombreArchivo = "reporte_ventas";
+        if ($fechaInicio && $fechaFin) {
+            $nombreArchivo .= "_" . str_replace(['-', '/'], '_', $fechaInicio) . "_a_" . str_replace(['-', '/'], '_', $fechaFin);
+        }
+        if ($estado) {
+            $nombreArchivo .= "_" . strtolower($estado);
+        }
+        $nombreArchivo .= ".pdf";
+
+        $dompdf->stream($nombreArchivo, ["Attachment" => true]);
     }
-
-    if ($fechaFin) {
-        $fechaFin = date('Y-m-d', strtotime(str_replace('/', '-', $fechaFin)));
-    }
-
-
-    require_once 'models/Venta.php';
-    $ventaModel = new Venta();
-    $ventas = $ventaModel->listarVentasPorEstadoYFechas($estado, $fechaInicio, $fechaFin);
-    
-
-    // Para depuración
-    $parametrosDebug = [
-        'estado' => $estado,
-        'fechaInicio' => $fechaInicio,
-        'fechaFin' => $fechaFin
-    ];
-
-    // Datos de la empresa
-    $nombreEmpresa = "Empresa Importante del Sector";
-    $NIT = "2342343453";
-    $direccion = "Barrio Picaleña #45-34";
-    $telefono = "3452345324";
-    $fechaGeneracion = date('Y-m-d H:i:s');
-
-    // Formatear ventas para el reporte
-    $ventasFormateadas = [];
-    foreach ($ventas as $venta) {
-        $venta['total'] = '$' . number_format($venta['total'], 0, ',', '.');
-        $venta['estado'] = $venta['activo'] == 1 ? 'Activa' : 'Cancelada';
-        $ventasFormateadas[] = $venta;
-    }
-
-    // Filtros aplicados
-    $filtros = [
-        'estado' => $estado,
-        'fechaInicio' => $fechaInicio,
-        'fechaFin' => $fechaFin,
-        'debug' => $parametrosDebug
-    ];
-
-    // Preparar variables para la vista
-    $ventasReporte = $ventasFormateadas;
-    extract(compact('nombreEmpresa', 'NIT', 'direccion', 'telefono', 'fechaGeneracion', 'ventasReporte', 'filtros', 'parametrosDebug'));
-
-    // Cargar la vista
-    ob_start();
-    include "views/venta/reporte.php";
-    $html = ob_get_clean();
-
-    // Configurar DomPDF
-    $dompdf = new Dompdf();
-    $options = $dompdf->getOptions();
-    $options->set(['isRemoteEnabled' => true]);
-    $dompdf->setOptions($options);
-
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('letter', 'portrait');
-    $dompdf->render();
-
-    // Nombre del archivo
-    $nombreArchivo = "reporte_ventas";
-    if ($fechaInicio && $fechaFin) {
-        $nombreArchivo .= "_" . str_replace(['-', '/'], '_', $fechaInicio) . "_a_" . str_replace(['-', '/'], '_', $fechaFin);
-    }
-    if ($estado) {
-        $nombreArchivo .= "_" . strtolower($estado);
-    }
-    $nombreArchivo .= ".pdf";
-
-    // Descargar PDF
-    $dompdf->stream($nombreArchivo, ["Attachment" => true]);
-}
 
 
 
@@ -168,7 +154,8 @@ class VentaController{
         $totalMax = isset($_POST['totalMax']) && trim($_POST['totalMax']) !== '' ? $_POST['totalMax'] : null;
         $fechaInicio = isset($_POST['fechaInicio']) && trim($_POST['fechaInicio']) !== '' ? $_POST['fechaInicio'] : null;
         $fechaFin = isset($_POST['fechaFin']) && trim($_POST['fechaFin']) !== '' ? $_POST['fechaFin'] : null;
-        $estadoVenta = isset($_POST['estadoVenta']) ? $_POST['estadoVenta'] : null;
+        $estadoVenta = isset($_POST['estadoVenta']) && $_POST['estadoVenta'] !== '' ? $_POST['estadoVenta'] : null;
+
 
         $data['titulo'] = "Listado de Ventas";
         $ventas = $this->venta->listarVentasFiltradas($totalMin, $totalMax, $fechaInicio, $fechaFin, $estadoVenta);

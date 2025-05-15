@@ -21,6 +21,7 @@
             <div class="col-md-2">
                 <label for="estadoVenta" class="form-label">Estado</label>
                 <select class="form-select" id="estadoVenta" name="estadoVenta">
+                    <option value="" <?= !isset($filtros['estadoVenta']) || $filtros['estadoVenta'] === '' ? 'selected' : '' ?>>Todos</option>
                     <option value="1" <?= isset($filtros['estadoVenta']) && $filtros['estadoVenta'] == '1' ? 'selected' : '' ?>>Activa</option>
                     <option value="0" <?= isset($filtros['estadoVenta']) && $filtros['estadoVenta'] == '0' ? 'selected' : '' ?>>Cancelada</option>
                 </select>
@@ -48,11 +49,16 @@
             <div class="col-md-2">
                 <button type="submit" class="btn btn-success w-100">Aplicar filtros</button>
             </div>
+
+            <div class="col-md-2 offset-md-10">
+                <button type="button" id="btnLimpiarFiltros" class="btn btn-secondary w-100">Limpiar filtros</button>
+            </div>
         </form>
     </div>
 
+
     <h1 class="titulo my-5"><?= $data['titulo'] ?></h1>
-    <div class="table-responsive">
+    <div class="table-responsive mb-5">
         <table class="table table-hover table-custom">
             <thead>
                 <tr>
@@ -193,46 +199,19 @@
             const totalMaxEl = document.getElementById('totalMax');
             const fechaInicioEl = document.getElementById('fechaInicio');
             const fechaFinEl = document.getElementById('fechaFin');
-            const estadoVentaEl = document.getElementById('estadoVenta');
 
             const totalMin = totalMinEl.value.trim();
             const totalMax = totalMaxEl.value.trim();
             const fechaInicio = fechaInicioEl.value.trim();
             const fechaFin = fechaFinEl.value.trim();
-            const estadoVenta = estadoVentaEl.value.trim();
 
             const totalFieldsFilled = totalMin !== '' && totalMax !== '';
             const dateFieldsFilled = fechaInicio !== '' && fechaFin !== '';
-            const estadoFilled = estadoVenta !== ''; 
 
             const fechasValidas = !dateFieldsFilled || new Date(fechaInicio) <= new Date(fechaFin);
             const totalMinVal = parseFloat(totalMin);
             const totalMaxVal = parseFloat(totalMax);
             const totalesValidos = !totalFieldsFilled || totalMinVal <= totalMaxVal;
-
-            const allFieldsEmpty = totalMin === '' && totalMax === '' && fechaInicio === '' && fechaFin === '' && !estadoFilled;
-
-            if (allFieldsEmpty) {
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Sin filtros',
-                    text: 'No se ha especificado ningún filtro.',
-                    confirmButtonText: 'Aceptar'
-                });
-                return;
-            }
-
-            if (!(totalFieldsFilled || dateFieldsFilled || estadoFilled)) {
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Filtros incompletos',
-                    text: 'Debes completar al menos los campos de total mínimo y máximo, los de fecha inicio y fin, o seleccionar un estado.',
-                    confirmButtonText: 'Aceptar'
-                });
-                return;
-            }
 
             if (dateFieldsFilled && !fechasValidas) {
                 event.preventDefault();
@@ -257,7 +236,11 @@
         });
     });
 
-
+    document.getElementById('btnLimpiarFiltros').addEventListener('click', function () {
+        const form = this.closest('form');
+        form.reset();
+        form.querySelector('#estadoVenta').value = '';
+    });
 
 </script>
 

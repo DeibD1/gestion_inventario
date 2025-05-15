@@ -15,14 +15,15 @@
 <?php require_once "views/shared/navbar.php"; ?>
 <div class="container">
 
-  <div>
-    <h4 class="titulo-reporte text-center mb-4"><?= $data['titulo'] ?></h4>
-    
+    <div>
+        <h4 class="titulo-reporte text-center mb-4"><?= $data['titulo'] ?></h4>
+
     <div class="contenedor-formulario">
         <form method="post" action="index.php?controlador=Venta&accion=generarReportePDF" class="formulario-reporte row gx-4 gy-3 align-items-end">
             <div class="col-md-3">
                 <label for="estadoVenta" class="form-label">Estado</label>
                 <select class="form-select" id="estadoVenta" name="estadoVenta">
+                    <option value="" <?= !isset($filtros['estadoVenta']) || $filtros['estadoVenta'] === '' ? 'selected' : '' ?>>Todos</option>
                     <option value="1" <?= isset($filtros['estadoVenta']) && $filtros['estadoVenta'] == '1' ? 'selected' : '' ?>>Activa</option>
                     <option value="0" <?= isset($filtros['estadoVenta']) && $filtros['estadoVenta'] == '0' ? 'selected' : '' ?>>Cancelada</option>
                 </select>
@@ -40,9 +41,12 @@
             <div class="col-md-3">
                 <button type="submit" class="btn btn-success w-100">Generar Reporte</button>
             </div>
+
+            <div class="col-md-3 offset-md-9">
+                <button type="button" id="btnLimpiarFiltrosReporte" class="btn btn-secondary w-100">Limpiar filtros</button>
+            </div>
         </form>
     </div>
-</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -70,53 +74,18 @@
 <?php endif; ?>
 
 <script>
-    function confirmDelete(idVenta) {
-        let confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-        confirmDeleteBtn.href = `index.php?controlador=Venta&accion=delete&idVenta=${idVenta}`;
-        
-        let modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-        modal.show();
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form[action="index.php?controlador=Venta&accion=#"]');
+        const form = document.querySelector('form[action="index.php?controlador=Venta&accion=generarReportePDF"]');
         form.addEventListener('submit', function (event) {
             const fechaInicioEl = document.getElementById('fechaInicio');
             const fechaFinEl = document.getElementById('fechaFin');
-            const estadoVentaEl = document.getElementById('estadoVenta');
 
             const fechaInicio = fechaInicioEl.value.trim();
             const fechaFin = fechaFinEl.value.trim();
-            const estadoVenta = estadoVentaEl.value.trim();
 
             const dateFieldsFilled = fechaInicio !== '' && fechaFin !== '';
-            const estadoFilled = estadoVenta !== ''; 
 
             const fechasValidas = !dateFieldsFilled || new Date(fechaInicio) <= new Date(fechaFin);
-
-            const allFieldsEmpty = fechaInicio === '' && fechaFin === '' && !estadoFilled;
-
-            if (allFieldsEmpty) {
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Sin filtros',
-                    text: 'No se ha especificado ningún filtro.',
-                    confirmButtonText: 'Aceptar'
-                });
-                return;
-            }
-
-            if (!(dateFieldsFilled || estadoFilled)) {
-                event.preventDefault();
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Filtros incompletos',
-                    text: 'Debes completar al menos los campos de total mínimo y máximo, los de fecha inicio y fin, o seleccionar un estado.',
-                    confirmButtonText: 'Aceptar'
-                });
-                return;
-            }
 
             if (dateFieldsFilled && !fechasValidas) {
                 event.preventDefault();
@@ -128,10 +97,15 @@
                 });
                 return;
             }
+
         });
     });
 
-
+    document.getElementById('btnLimpiarFiltrosReporte').addEventListener('click', function () {
+        const form = this.closest('form');
+        form.reset();
+        form.querySelector('#estadoVenta').value = '';
+    });
 
 </script>
 

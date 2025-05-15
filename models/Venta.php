@@ -124,49 +124,49 @@ class  Venta{
     }
 
     public function listarVentasPorEstadoYFechas($estadoVenta, $fechaInicio, $fechaFin) {
-    $sql = "SELECT * FROM venta WHERE 1=1";
-    $params = [];
-    $types = "";
+        $sql = "SELECT * FROM venta WHERE 1=1";
+        $params = [];
+        $types = "";
 
-    if (!is_null($estadoVenta) && $estadoVenta !== '') {
-        $sql .= " AND activo = ?";
-        $types .= "i";
-        $params[] = $estadoVenta;
+        if (!is_null($estadoVenta) && $estadoVenta !== '') {
+            $sql .= " AND activo = ?";
+            $types .= "i";
+            $params[] = $estadoVenta;
+        }
+
+        if (!is_null($fechaInicio) && $fechaInicio !== '') {
+            $sql .= " AND fecha >= ?";
+            $types .= "s";
+            $params[] = $fechaInicio;
+        }
+
+        if (!is_null($fechaFin) && $fechaFin !== '') {
+            $sql .= " AND fecha <= ?";
+            $types .= "s";
+            $params[] = $fechaFin;
+        }
+
+        $sql .= " ORDER BY fecha DESC";
+        $stmt = $this->db->prepare($sql);
+
+        if (!$stmt) {
+            die("Error al preparar la consulta: " . $this->db->error);
+        }
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $ventas = [];
+        while ($row = $result->fetch_assoc()) {
+            $ventas[] = $row;
+        }
+
+        return $ventas;
     }
-
-    if (!is_null($fechaInicio) && $fechaInicio !== '') {
-        $sql .= " AND fecha >= ?";
-        $types .= "s";
-        $params[] = $fechaInicio;
-    }
-
-    if (!is_null($fechaFin) && $fechaFin !== '') {
-        $sql .= " AND fecha <= ?";
-        $types .= "s";
-        $params[] = $fechaFin;
-    }
-
-    $sql .= " ORDER BY fecha DESC";
-    $stmt = $this->db->prepare($sql);
-
-    if (!$stmt) {
-        die("Error al preparar la consulta: " . $this->db->error);
-    }
-
-    if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
-    }
-
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $ventas = [];
-    while ($row = $result->fetch_assoc()) {
-        $ventas[] = $row;
-    }
-
-    return $ventas;
-}
 
 
 }
