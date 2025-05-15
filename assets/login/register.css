@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
 
-/* Estilos generales */
 body {
   font-family: "Poppins", sans-serif;
   background: linear-gradient(to right, #141e30, #243b55);
@@ -12,7 +11,6 @@ body {
   overflow: hidden;
 }
 
-/* Contenedor del formulario */
 .container {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
@@ -24,7 +22,6 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Título decorado */
 .container h2 {
   font-size: 28px;
   color: #ffffff;
@@ -45,7 +42,6 @@ body {
   transform: translateX(-50%);
 }
 
-/* Estilos para los inputs */
 .form-group input {
   width: 93%;
   padding: 12px;
@@ -59,24 +55,19 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Placeholder estilizado */
 .form-group input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Efecto de focus en los inputs */
 .form-group input:focus {
   background: rgba(255, 255, 255, 0.3);
   transform: scale(1.05);
 }
 
-/* Botón de login */
-
-/* Estilos para ambos botones (input y enlace) */
 .form-btn input[type="submit"],
 .form-btn a.btn {
   width: 100%;
-  padding: 12px 20px; /* Ajusta el padding vertical y horizontal */
+  padding: 12px 20px;
   background: #007bff;
   border: none;
   border-radius: 5px;
@@ -86,27 +77,50 @@ body {
   transition: all 0.3s ease;
   text-decoration: none;
   text-align: center;
-  display: inline-block; /* Para que el enlace se comporte como un botón */
-  line-height: 1.5; /* Asegura que el texto esté centrado verticalmente */
-  box-sizing: border-box; /* Incluye padding en el ancho total */
-  margin: 5px 0; /* Espaciado entre botones */
+  display: inline-block;
+  line-height: 1.5;
+  box-sizing: border-box;
+  margin: 5px 0;
 }
 
-/* Hover para ambos botones */
 .form-btn input[type="submit"]:hover,
 .form-btn a.btn:hover {
   background: #0056b3;
   transform: scale(1.02);
 }
 
-/* Contenedor de botones para alinearlos correctamente */
 .form-btn {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Espacio entre botones */
+  gap: 10px;
 }
 
-/* Animación de entrada */
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.form-group select option[value=""] {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.form-group select:focus {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -118,7 +132,6 @@ body {
   }
 }
 
-/* Estilos responsivos */
 @media (max-width: 400px) {
   .container {
     width: 90%;

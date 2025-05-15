@@ -7,8 +7,22 @@ class VentaController{
     private $producto;
 
     public function __construct(){
+        session_start();
+
+        if (!isset($_SESSION['rol'])) {
+            header("Location: index.php?controlador=User&accion=login");
+            exit();
+        }
+
+        $rolesPermitidos = ['admin', 'cajero'];
+        if (!in_array($_SESSION['rol'], $rolesPermitidos)) {
+            require_once "views/users/accesoDenegado.php";
+            exit();
+        }
+
         require_once "models/Producto.php";
         $this->producto = new Producto();
+
         require_once "models/Venta.php";
         $this->venta = new Venta();
     }
@@ -221,9 +235,7 @@ class VentaController{
     public function reporteVentas(){
     $data['titulo'] = "Generar Reporte de Ventas";
     
-    // Si se envió el formulario para generar el reporte
     if (isset($_POST['generarReporte'])) {
-        // Redirigir a la función de generación de PDF con los parámetros de filtro
         $estado = isset($_POST['estado']) ? $_POST['estado'] : '';
         $fechaInicio = isset($_POST['fechaInicio']) ? $_POST['fechaInicio'] : '';
         $fechaFin = isset($_POST['fechaFin']) ? $_POST['fechaFin'] : '';
@@ -235,7 +247,6 @@ class VentaController{
         exit();
     }
     
-    // Si solo se está cargando la vista
     $ventas = $this->venta->listarVentas();
     $ventasFormateadas = [];
     foreach ($ventas as $venta) {

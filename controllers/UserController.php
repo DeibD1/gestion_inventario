@@ -23,7 +23,17 @@ class UserController {
             $email = $_POST["email"];
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT); 
 
-            if (!$this->users->register($name, $email, $password)) {
+            $rol = isset($_POST["rol"]) ? $_POST["rol"] : "cliente"; 
+
+            $roles_permitidos = ["admin", "bodega", "cajero", "cliente"];
+            if (!in_array($rol, $roles_permitidos)) {
+                session_start();
+                $_SESSION['error'] = 'rol_invalido';
+                header("Location: index.php?controlador=User&accion=register");
+                exit();
+            }
+
+            if (!$this->users->register($name, $email, $password, $rol)) {
                 session_start();
                 $_SESSION['error'] = 'email_existente';
                 header("Location: index.php?controlador=User&accion=register");
@@ -35,15 +45,38 @@ class UserController {
         }
     }
 
+
     public function verificarLogin() {
         session_start(); 
-    
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST["email"];
             $password = $_POST["password"];
 
-            if ($this->users->login($email, $password)) {
-                header("Location: index.php?controlador=proveedor&accion=index");
+            $usuario = $this->users->login($email, $password);
+
+            if ($usuario) {
+                $_SESSION["id"] = $usuario["id"];
+                $_SESSION["fullname"] = $usuario["full_name"];
+                $_SESSION["email"] = $usuario["email"];
+                $_SESSION["rol"] = $usuario["rol"];
+
+                switch ($usuario["rol"]) {
+                    case "admin":
+                        header("Location: index.php?controlador=Producto&accion=index");
+                        break;
+                    case "bodega":
+                        header("Location: index.php?controlador=Producto&accion=index");
+                        break;
+                    case "cajero":
+                        header("Location: index.php?controlador=Venta&accion=index");
+                        break;
+                    default:
+                        $_SESSION["error"] = "Rol no válido.";
+                        header("Location: index.php?controlador=User&accion=login");
+                        break;
+                }
+
                 exit();
             } else {
                 $_SESSION["error"] = "Usuario o contraseña incorrecto";
@@ -54,6 +87,7 @@ class UserController {
     }
 
     public function logout() {
+        session_start();
         session_destroy();
         header("Location: index.php?controlador=User&accion=login");
         exit();

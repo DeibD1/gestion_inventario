@@ -42,6 +42,15 @@
                 placeholder="Repite la contraseña: "
                 required="required">
         </div>
+        
+        <div class="form-group">
+            <select name="rol" id="rol" class="form-control" required>
+                <option value="" disabled selected>Selecciona un rol</option>
+                <option value="bodega">Bodega</option>
+                <option value="cajero">Cajero</option>
+            </select>
+        </div>
+
         <div class="form-btn">
             <input type="submit" class="btn btn-primary" value="Enviar" name="submit">
             <a href="index.php?controlador=User&accion=login" class="btn btn-primary">Volver</a>
@@ -58,9 +67,18 @@ if (isset($_SESSION['error']) && $_SESSION['error'] == 'email_existente') {
             text: "El correo electrónico ya existe. Intenta con otro."
         });
     </script>';
-    unset($_SESSION['error']); // Limpiar error para evitar que se repita la alerta
+    unset($_SESSION['error']);
+}
+if (isset($_SESSION['error']) && $_SESSION['error'] == 'rol_invalido') {
+    echo '<script>
+        Swal.fire({
+            icon: "error",
+            title: "Rol inválido",
+            text: "El rol seleccionado no es válido."
+        });
+    </script>';
+    unset($_SESSION['error']);
 }
 ?>
-
 </body>
 </html>

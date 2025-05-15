@@ -5,11 +5,25 @@ class ProductoController{
     private $producto;
     private $proveedor;
 
-    public function __construct(){
-        require_once "models/Producto.php";
-        $this->producto = new Producto();
-        require_once "models/Proveedor.php";
-        $this->proveedor = new Proveedor();
+    public function __construct() {
+            session_start();
+
+            if (!isset($_SESSION['rol'])) {
+                header("Location: index.php?controlador=User&accion=login");
+                exit();
+            }
+
+            $rolesPermitidos = ['admin', 'bodega'];
+            if (!in_array($_SESSION['rol'], $rolesPermitidos)) {
+                require_once "views/users/accesoDenegado.php";
+                exit();
+            }
+
+            require_once "models/Producto.php";
+            $this->producto = new Producto();
+
+            require_once "models/Proveedor.php";
+            $this->proveedor = new Proveedor();
     }
 
     public function index(){
