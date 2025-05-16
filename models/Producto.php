@@ -78,6 +78,12 @@ class Producto{
         $stmt->execute();
     }
 
+    public function reponerCantidad($id_producto, $cantidad){
+        $stmt = $this->db->prepare("UPDATE producto SET cantidad = cantidad + ? WHERE id = ?");
+        $stmt->bind_param("ii", $cantidad, $id_producto);
+        $stmt->execute();
+    }
+
     public function listarProductosFiltrados($nombreFiltro) {
         $sql = "SELECT prod.*, prov.nombre AS proveedor 
                 FROM producto prod 

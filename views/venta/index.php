@@ -150,7 +150,7 @@
                     ¿Estás seguro de que deseas cancelar esta venta?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancelar</button>
                     <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Aceptar</a>
                 </div>
             </div>
@@ -238,8 +238,12 @@
 
     document.getElementById('btnLimpiarFiltros').addEventListener('click', function () {
         const form = this.closest('form');
-        form.reset();
-        form.querySelector('#estadoVenta').value = '';
+        form.querySelectorAll('input, select').forEach(function (element) {
+            if (element.type === 'select-one' || element.type === 'text' || element.type === 'number' || element.type === 'date') {
+                element.value = '';
+            }
+        });
+
     });
 
 </script>

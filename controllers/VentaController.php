@@ -227,10 +227,21 @@ class VentaController{
     }
 
     public function delete($idVenta){
+        $productosVentaCancelada = $this->venta->listarProductosVenta($idVenta);
+
+        foreach ($productosVentaCancelada as $producto) {
+            $idProducto = $producto['id']; 
+            $cantidadVendida = $producto['cantidad_vendida']; 
+
+            $this->producto->reponerCantidad($idProducto, $cantidadVendida);
+        }
+
         $this->venta->delete($idVenta);
+
         header("Location: index.php?controlador=Venta&accion=index");
         exit();
     }
+
 
     public function reporteVentas(){
     $data['titulo'] = "Generar Reporte de Ventas";
