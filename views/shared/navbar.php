@@ -7,18 +7,18 @@
     <div class="sidebar" id="sidebar">
         <ul class="menu">
 
-            <li onclick="toggleSubmenu(1)">📋 Inventario <span class="arrow">▶</span>
+            <li onclick="toggleSubmenu(1)">🚚 Proveedores <span class="arrow">▶</span>
                 <ul class="submenu" id="submenu-1">
-                    <li><a href="index.php?controlador=Producto&accion=index">📜 Lista de Productos</a></li>
-                    <li><a href="index.php?controlador=Producto&accion=insert">✍ Registrar Productos</a></li>
-                    <li><a href="index.php?controlador=Producto&accion=reporte">📑 Reporte de Inventario</a></li>
+                    <li><a href="index.php?controlador=Proveedor&accion=index">📜 Lista de Proveedores</a></li>
+                    <li><a href="index.php?controlador=Proveedor&accion=insert">✍ Registrar Proveedor</a></li>
                 </ul>
             </li>
 
-            <li onclick="toggleSubmenu(2)">🚚 Proveedores <span class="arrow">▶</span>
+            <li onclick="toggleSubmenu(2)">📋 Inventario <span class="arrow">▶</span>
                 <ul class="submenu" id="submenu-2">
-                    <li><a href="index.php?controlador=Proveedor&accion=index">📜 Lista de Proveedores</a></li>
-                    <li><a href="index.php?controlador=Proveedor&accion=insert">✍ Registrar Proveedor</a></li>
+                    <li><a href="index.php?controlador=Producto&accion=index">📜 Lista de Productos</a></li>
+                    <li><a href="index.php?controlador=Producto&accion=insert">✍ Registrar Productos</a></li>
+                    <li><a href="index.php?controlador=Producto&accion=reporte">📑 Reporte de Inventario</a></li>
                 </ul>
             </li>
 

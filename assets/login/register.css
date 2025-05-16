@@ -121,6 +121,21 @@ body {
   color: white;
 }
 
+.form-btn a {
+  background: #28a745;
+  text-decoration: none;
+}
+
+.form-btn a:hover {
+  background: #1e7e34;
+  transform: scale(1.05);
+}
+
+.form-group select option {
+  background-color: #243b55;
+  color: white;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
